@@ -1,6 +1,10 @@
-import numpy
+import os
+import shutil
 
-print(numpy.random.rand())
-print(numpy.random.rand())
-print(numpy.random.rand())
-print(numpy.random.rand())
+if __name__ == '__main__':
+    loadPath = '/home/bztbztbzt/IEMOCAP/BLSTMwAttention/StandardAttention/'
+    savePath = '/home/bztbztbzt/IEMOCAP/BLSTMwAttention/StandardAttention-Result/'
+    os.makedirs(savePath)
+    for part in os.listdir(loadPath):
+        shutil.copytree(src=os.path.join(loadPath, part, '-TestResult'),
+                        dst=os.path.join(savePath, part + '-TestResult'))

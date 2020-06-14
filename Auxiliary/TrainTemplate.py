@@ -100,3 +100,64 @@ def TrainTemplate_CNN_Meta(encoder, decoder, trainDataset, cudaFlag, learningRat
                     savePath=os.path.join(savePath, 'Encoder-%04d' % episode))
         SaveNetwork(model=decoder, optimizer=decoderOptimizer,
                     savePath=os.path.join(savePath, 'Decoder-%04d' % episode))
+
+
+def Template_FluctuateSize(Model, trainDataset, testDataset, cudaFlag=True, saveFlag=True, savePath=None,
+                           learningRate=1E-3, episodeNumber=100):
+    # Check the Path
+    if os.path.exists(savePath): return
+    os.makedirs(savePath)
+    os.makedirs(savePath + '-TestResult')
+
+    print(Model)
+
+    # In general, using the Adam and Cross Entropy Loss
+    if cudaFlag: Model.cuda()
+    optimizer = torch.optim.Adam(params=Model.parameters(), lr=learningRate)
+
+    lossFunction = torch.nn.CrossEntropyLoss()
+
+    for episode in range(episodeNumber):
+        episodeLoss = 0.0
+        with open(os.path.join(savePath, 'Loss-%04d.csv' % episode), 'w') as file:
+            for batchNumber, (batchData, batchSeq, batchLabel) in enumerate(trainDataset):
+                if cudaFlag:
+                    batchData = batchData.cuda()
+                    batchSeq = batchSeq.cuda()
+                    batchLabel = batchLabel.cuda()
+                # print(episode, numpy.shape(batchData), numpy.shape(batchSeq), numpy.shape(batchLabel))
+                result, _ = Model(inputData=batchData, inputSeqLen=batchSeq)
+                loss = lossFunction(input=result, target=batchLabel)
+
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+
+                file.write(str(loss.detach().cpu().numpy()) + '\n')
+                episodeLoss += loss.detach().cpu().numpy()
+                print('\rTraining %d Loss = %f' % (batchNumber, loss.detach().cpu().numpy()), end='')
+        print('\nEpisode %d Total Loss = %f' % (episode, episodeLoss))
+
+        if saveFlag: torch.save(obj=Model, f=os.path.join(savePath, 'Network-%04d.pkl' % episode))
+
+        testProbability, testPartPredict, testPartLabel = [], [], []
+        for batchNumber, (batchData, batchSeq, batchLabel) in enumerate(testDataset):
+            if cudaFlag:
+                batchData = batchData.cuda()
+                batchSeq = batchSeq.cuda()
+            testPartLabel.extend(batchLabel.numpy())
+
+            result, _ = Model(inputData=batchData, inputSeqLen=batchSeq)
+            result = result.detach().cpu().numpy()
+            testProbability.extend(result)
+            testPartPredict.extend(numpy.argmax(result, axis=1))
+
+        precisionRate = float(numpy.sum([testPartPredict[v] == testPartLabel[v]
+                                         for v in range(len(testPartPredict))])) / len(testPartPredict) * 100
+        print('Episode Test Precision %f%%' % precisionRate)
+
+        with open(os.path.join(savePath + '-TestResult', 'Result-%04d.csv' % episode), 'w') as file:
+            for indexX in range(len(testProbability)):
+                for indexY in range(len(testProbability[indexX])):
+                    file.write(str(testProbability[indexX][indexY]) + ',')
+                file.write(str(testPartLabel[indexX]) + '\n')

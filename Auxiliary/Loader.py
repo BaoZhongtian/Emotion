@@ -50,7 +50,7 @@ class Dataset_IEMOCAP(torch_utils_data.Dataset):
 
 
 def Loader_IEMOCAP(includePart=['improve', 'script'], appointGender=None, appointSession=None, batchSize=64,
-                   multiFlag=False):
+                   multiFlag=False, shuffleFlag=True):
     def ConcatData(inputData):
         totalConcatData = []
         for sample in inputData:
@@ -99,17 +99,55 @@ def Loader_IEMOCAP(includePart=['improve', 'script'], appointGender=None, appoin
     ##########################################################
 
     if len(testData) != 0:
-        return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=True,
+        return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=shuffleFlag,
                                            collate_fn=Collate_IEMOCAP()), \
                torch_utils_data.DataLoader(dataset=testDataset, batch_size=batchSize, shuffle=False,
                                            collate_fn=Collate_IEMOCAP())
     else:
-        return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=True,
+        return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=shuffleFlag,
                                            collate_fn=Collate_IEMOCAP()), None
 
 
+def Loader_IEMOCAP_UnsupervisedFeatures(appoingGender=None, appoingSession=None, batchSize=64, metaFlag=False,
+                                        multiFlag=False, shuffleFlag=True):
+    loadPath = 'D:/PythonProjects_Data/IEMOCAP/UnsupervisedFeatures/'
+    data = numpy.load(file=os.path.join(loadPath, 'Reconstruction%s%s.npy' % (
+        '_MultiFlag' if multiFlag else '', '_Meta' if metaFlag else '')), allow_pickle=True)
+    label = numpy.load(file=os.path.join(loadPath, 'ReconstructionLabel.npy'), allow_pickle=True)
+
+    if appoingGender is None and appoingSession is None:
+        trainDataset = Dataset_IEMOCAP(data=data, label=label)
+        return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=shuffleFlag,
+                                           collate_fn=Collate_IEMOCAP()), None
+
+    loadPath = 'D:/PythonProjects_Data/IEMOCAP/DataSource_Audio/'
+    startPosition = 0
+
+    trainData, trainLabel, testData, testLabel = [], [], [], []
+    for part in ['improve', 'script']:
+        for gender in ['Female', 'Male']:
+            for session in range(1, 6):
+                currentLabel = numpy.load(
+                    file=os.path.join(loadPath, '%s-%s-Session%d-Label.npy' % (part, gender, session)),
+                    allow_pickle=True)
+                if gender == appoingGender and session == appoingSession:
+                    testData.extend(data[startPosition:startPosition + len(currentLabel)])
+                    testLabel.extend(label[startPosition:startPosition + len(currentLabel)])
+                else:
+                    trainData.extend(data[startPosition:startPosition + len(currentLabel)])
+                    trainLabel.extend(label[startPosition:startPosition + len(currentLabel)])
+                startPosition += len(currentLabel)
+    print(numpy.shape(trainData), numpy.shape(trainLabel), numpy.shape(testData), numpy.shape(testLabel))
+    trainDataset = Dataset_IEMOCAP(data=trainData, label=trainLabel)
+    testDataset = Dataset_IEMOCAP(data=testData, label=testLabel)
+    return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=shuffleFlag,
+                                       collate_fn=Collate_IEMOCAP()), \
+           torch_utils_data.DataLoader(dataset=testDataset, batch_size=batchSize, shuffle=False,
+                                       collate_fn=Collate_IEMOCAP())
+
+
 if __name__ == '__main__':
-    trainDataset, testDataset = Loader_IEMOCAP(appointGender='Female', appointSession=1, multiFlag=True)
+    trainDataset, testDataset = Loader_IEMOCAP_UnsupervisedFeatures(appoingGender='Female', appoingSession=1)
     for batchIndex, [batchData, batchSeq, _] in enumerate(trainDataset):
         print(numpy.shape(batchData), batchSeq)
         exit()
