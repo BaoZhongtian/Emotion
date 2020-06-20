@@ -38,6 +38,43 @@ class Collate_IEMOCAP:
         raise RuntimeError("Could Not Allocate Batch")
 
 
+class Collate_BothRepresentation:
+    def __init__(self):
+        pass
+
+    def __DataTensor2D(self, dataInput, maxLen):
+        return numpy.concatenate([dataInput, torch.zeros([maxLen - len(dataInput), numpy.shape(dataInput)[1]],
+                                                         dtype=torch.float)], axis=0)
+
+    def __DataTensor3D(self, dataInput, maxLen):
+        return numpy.concatenate([dataInput, torch.zeros(
+            [numpy.shape(dataInput)[0], maxLen - numpy.shape(dataInput)[1], numpy.shape(dataInput)[2]],
+            dtype=torch.float)], axis=1)
+
+    def __call__(self, batch):
+        xs = [v[0] for v in batch]
+        ys = [v[1] for v in batch]
+        zs = torch.LongTensor([v[2] for v in batch])
+
+        if len(numpy.shape(xs[0])) == 2:
+            xsLengths = torch.LongTensor([v for v in map(len, xs)])
+            max_len = max([len(v) for v in xs])
+            xs = numpy.array([self.__DataTensor2D(dataInput=v, maxLen=max_len) for v in xs], dtype=float)
+            newXs = torch.FloatTensor(xs).unsqueeze(1)
+        else:
+            if len(numpy.shape(xs[0])) == 3:
+                xsLengths = torch.LongTensor([numpy.shape(v)[1] for v in xs])
+                max_len = max([numpy.shape(v)[1] for v in xs])
+                xs = numpy.array([self.__DataTensor3D(dataInput=v, maxLen=max_len) for v in xs], dtype=float)
+                newXs = torch.FloatTensor(xs)
+
+        ysLengths = torch.LongTensor([v for v in map(len, ys)])
+        max_len = max([len(v) for v in ys])
+        ys = numpy.array([self.__DataTensor2D(dataInput=v, maxLen=max_len) for v in ys], dtype=float)
+        newYs = torch.FloatTensor(ys)
+        return newXs, xsLengths, newYs, ysLengths, zs
+
+
 class Dataset_IEMOCAP(torch_utils_data.Dataset):
     def __init__(self, data, label):
         self.data, self.label = data, label
@@ -47,6 +84,17 @@ class Dataset_IEMOCAP(torch_utils_data.Dataset):
 
     def __getitem__(self, index):
         return self.data[index], self.label[index]
+
+
+class Dataset_BothRepresentation(torch_utils_data.Dataset):
+    def __init__(self, data, representation, label):
+        self.data, self.representation, self.label = data, representation, label
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        return self.data[index], self.representation[index], self.label[index]
 
 
 def Loader_IEMOCAP(includePart=['improve', 'script'], appointGender=None, appointSession=None, batchSize=64,
@@ -108,14 +156,14 @@ def Loader_IEMOCAP(includePart=['improve', 'script'], appointGender=None, appoin
                                            collate_fn=Collate_IEMOCAP()), None
 
 
-def Loader_IEMOCAP_UnsupervisedFeatures(appoingGender=None, appoingSession=None, batchSize=64, metaFlag=False,
+def Loader_IEMOCAP_UnsupervisedFeatures(appointGender=None, appointSession=None, batchSize=64, metaFlag=False,
                                         multiFlag=False, shuffleFlag=True):
     loadPath = 'D:/PythonProjects_Data/IEMOCAP/UnsupervisedFeatures/'
     data = numpy.load(file=os.path.join(loadPath, 'Reconstruction%s%s.npy' % (
         '_MultiFlag' if multiFlag else '', '_Meta' if metaFlag else '')), allow_pickle=True)
     label = numpy.load(file=os.path.join(loadPath, 'ReconstructionLabel.npy'), allow_pickle=True)
 
-    if appoingGender is None and appoingSession is None:
+    if appointGender is None and appointSession is None:
         trainDataset = Dataset_IEMOCAP(data=data, label=label)
         return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=shuffleFlag,
                                            collate_fn=Collate_IEMOCAP()), None
@@ -130,7 +178,7 @@ def Loader_IEMOCAP_UnsupervisedFeatures(appoingGender=None, appoingSession=None,
                 currentLabel = numpy.load(
                     file=os.path.join(loadPath, '%s-%s-Session%d-Label.npy' % (part, gender, session)),
                     allow_pickle=True)
-                if gender == appoingGender and session == appoingSession:
+                if gender == appointGender and session == appointSession:
                     testData.extend(data[startPosition:startPosition + len(currentLabel)])
                     testLabel.extend(label[startPosition:startPosition + len(currentLabel)])
                 else:
@@ -146,8 +194,101 @@ def Loader_IEMOCAP_UnsupervisedFeatures(appoingGender=None, appoingSession=None,
                                        collate_fn=Collate_IEMOCAP())
 
 
+def Loader_IEMOCAP_Both(appointGender=None, appointSession=None, batchSize=64, metaFlag=False,
+                        multiFlag=False, shuffleFlag=True):
+    def ConcatData(inputData):
+        totalConcatData = []
+        for sample in inputData:
+            delta, deltaDelta = [], []
+            for index in range(1, len(sample)):
+                delta.append(sample[index] - sample[index - 1])
+            delta = numpy.array(delta)
+            for index in range(1, len(delta)):
+                deltaDelta.append(delta[index] - delta[index - 1])
+            deltaDelta = numpy.array(deltaDelta)
+
+            concatData = numpy.concatenate(
+                [sample[numpy.newaxis, :-2, :], delta[numpy.newaxis, :-1, :], deltaDelta[numpy.newaxis, :, :]], axis=0)
+            totalConcatData.append(concatData)
+        return totalConcatData
+
+    def OriginDataLoadPart():
+        loadPath = 'D:/PythonProjects_Data/IEMOCAP/DataSource_Audio/'
+        trainData, trainLabel, testData, testLabel = [], [], [], []
+
+        for part in ['improve', 'script']:
+            for gender in ['Female', 'Male']:
+                for session in range(1, 6):
+                    currentData = numpy.load(
+                        file=os.path.join(loadPath, '%s-%s-Session%d-Data.npy' % (part, gender, session)),
+                        allow_pickle=True)
+                    currentLabel = numpy.load(
+                        file=os.path.join(loadPath, '%s-%s-Session%d-Label.npy' % (part, gender, session)),
+                        allow_pickle=True)
+                    currentLabel = numpy.argmax(currentLabel, axis=1)
+
+                    if appointGender is not None and gender == appointGender and session == appointSession:
+                        testData.extend(currentData)
+                        testLabel.extend(currentLabel)
+                    else:
+                        trainData.extend(currentData)
+                        trainLabel.extend(currentLabel)
+        print(numpy.shape(trainData), numpy.shape(trainLabel), numpy.shape(testData), numpy.shape(testLabel))
+        return trainData, trainLabel, testData, testLabel
+
+    def UnsupervisedDataLoadPart():
+        loadPath = 'D:/PythonProjects_Data/IEMOCAP/UnsupervisedFeatures/'
+        data = numpy.load(file=os.path.join(loadPath, 'Reconstruction%s%s.npy' % (
+            '_MultiFlag' if multiFlag else '', '_Meta' if metaFlag else '')), allow_pickle=True)
+        label = numpy.load(file=os.path.join(loadPath, 'ReconstructionLabel.npy'), allow_pickle=True)
+
+        loadPath = 'D:/PythonProjects_Data/IEMOCAP/DataSource_Audio/'
+        startPosition = 0
+
+        trainData, trainLabel, testData, testLabel = [], [], [], []
+        for part in ['improve', 'script']:
+            for gender in ['Female', 'Male']:
+                for session in range(1, 6):
+                    currentLabel = numpy.load(
+                        file=os.path.join(loadPath, '%s-%s-Session%d-Label.npy' % (part, gender, session)),
+                        allow_pickle=True)
+                    if gender == appointGender and session == appointSession:
+                        testData.extend(data[startPosition:startPosition + len(currentLabel)])
+                        testLabel.extend(label[startPosition:startPosition + len(currentLabel)])
+                    else:
+                        trainData.extend(data[startPosition:startPosition + len(currentLabel)])
+                        trainLabel.extend(label[startPosition:startPosition + len(currentLabel)])
+                    startPosition += len(currentLabel)
+        print(numpy.shape(trainData), numpy.shape(trainLabel), numpy.shape(testData), numpy.shape(testLabel))
+        return trainData, trainLabel, testData, testLabel
+
+    originTrainData, originTrainLabel, originTestData, originTestLabel = OriginDataLoadPart()
+    unsuperTrainData, unsuperTrainLabel, unsuperTestData, unsuperTestLabel = UnsupervisedDataLoadPart()
+
+    if multiFlag:
+        trainDataset = Dataset_BothRepresentation(
+            data=ConcatData(originTrainData), representation=unsuperTrainData, label=originTrainLabel)
+        if len(originTestData) != 0: testDataset = Dataset_BothRepresentation(
+            data=ConcatData(originTestData), representation=unsuperTestData, label=originTestLabel)
+    else:
+        trainDataset = Dataset_BothRepresentation(
+            data=originTrainData, representation=unsuperTrainData, label=originTrainLabel)
+        if len(originTestData) != 0: testDataset = Dataset_BothRepresentation(
+            data=originTestData, representation=unsuperTestData, label=originTestLabel)
+
+    ##########################################################
+    if len(originTestData) != 0:
+        return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=shuffleFlag,
+                                           collate_fn=Collate_BothRepresentation()), \
+               torch_utils_data.DataLoader(dataset=testDataset, batch_size=batchSize, shuffle=False,
+                                           collate_fn=Collate_BothRepresentation())
+    else:
+        return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=shuffleFlag,
+                                           collate_fn=Collate_BothRepresentation()), None
+
+
 if __name__ == '__main__':
-    trainDataset, testDataset = Loader_IEMOCAP_UnsupervisedFeatures(appoingGender='Female', appoingSession=1)
-    for batchIndex, [batchData, batchSeq, _] in enumerate(trainDataset):
-        print(numpy.shape(batchData), batchSeq)
-        exit()
+    trainDataset, testDataset = Loader_IEMOCAP_Both(multiFlag=True)
+    for batchIndex, [batchData, batchSeq, batchRepre, batchRepreSeq, batchLabel] in enumerate(trainDataset):
+        print(batchIndex, numpy.shape(batchData), numpy.shape(batchRepre))
+        # exit()
