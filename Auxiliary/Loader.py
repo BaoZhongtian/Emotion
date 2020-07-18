@@ -38,6 +38,35 @@ class Collate_IEMOCAP:
         raise RuntimeError("Could Not Allocate Batch")
 
 
+class Collate_OnlyText:
+    def __init__(self):
+        pass
+
+    def __call__(self, batch):
+        xsCurrent = [v[0] for v in batch]
+        xs = []
+        for sample in xsCurrent:
+            if len(numpy.shape(sample)) < 2:
+                xs.append(numpy.reshape(sample, [1, -1]))
+            else:
+                xs.append(sample)
+        ys = torch.LongTensor([v[1] for v in batch])
+        seqLen = torch.LongTensor([v for v in map(len, xs)])
+        maxSeqLen = max([len(v) for v in xs])
+        maxCharLen = max([numpy.shape(v)[1] for v in xs])
+
+        #####################################
+
+        padingXs = []
+        for index in range(len(xs)):
+            padding = numpy.zeros([numpy.shape(xs[index])[0], maxCharLen - numpy.shape(xs[index])[1]])
+            firstPadResult = numpy.concatenate([xs[index], padding], axis=1)
+            padding = numpy.zeros([maxSeqLen - numpy.shape(xs[index])[0], maxCharLen])
+            padingXs.append(numpy.concatenate([firstPadResult, padding], axis=0))
+        padingXs = torch.LongTensor(padingXs)
+        return padingXs, ys, seqLen
+
+
 class Collate_BothRepresentation:
     def __init__(self):
         pass
@@ -287,8 +316,45 @@ def Loader_IEMOCAP_Both(appointGender=None, appointSession=None, batchSize=64, m
                                            collate_fn=Collate_BothRepresentation()), None
 
 
+def Loader_IEMOCAP_OnlyText(appointGender=None, appointSession=None, batchSize=64, shuffleFlag=True):
+    loadPath = 'D:/PythonProjects_Data/IEMOCAP_Text&Audio/DataSource/OnlyText/'
+    trainData, trainLabel, testData, testLabel = [], [], [], []
+    for part in ['improve', 'script']:
+        for gender in ['Female', 'Male']:
+            for session in range(1, 6):
+                currentLabel = numpy.load(
+                    file=os.path.join(loadPath, '%s_Session%d_%s_Label.npy' % (part, session, gender)),
+                    allow_pickle=True)
+                currentData = numpy.load(
+                    file=os.path.join(loadPath, '%s_Session%d_%s_Data.npy' % (part, session, gender)),
+                    allow_pickle=True)
+                if gender == appointGender and session == appointSession:
+                    testData.extend(currentData)
+                    testLabel.extend(currentLabel)
+                else:
+                    trainData.extend(currentData)
+                    trainLabel.extend(currentLabel)
+
+    print(numpy.shape(trainData), numpy.shape(trainLabel), numpy.shape(testData), numpy.shape(testLabel),
+          numpy.sum(trainLabel, axis=0), numpy.sum(testLabel, axis=0))
+
+    trainLabel = numpy.argmax(trainLabel, axis=1)
+    trainDataset = Dataset_IEMOCAP(data=trainData, label=trainLabel)
+    if len(testData) != 0:
+        testLabel = numpy.argmax(testLabel, axis=1)
+        testDataset = Dataset_IEMOCAP(data=testData, label=testLabel)
+        return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=shuffleFlag,
+                                           collate_fn=Collate_OnlyText()), \
+               torch_utils_data.DataLoader(dataset=testDataset, batch_size=batchSize, shuffle=False,
+                                           collate_fn=Collate_OnlyText())
+    else:
+        return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=shuffleFlag,
+                                           collate_fn=Collate_OnlyText()), None
+
+
 if __name__ == '__main__':
-    trainDataset, testDataset = Loader_IEMOCAP_Both(multiFlag=True)
-    for batchIndex, [batchData, batchSeq, batchRepre, batchRepreSeq, batchLabel] in enumerate(trainDataset):
-        print(batchIndex, numpy.shape(batchData), numpy.shape(batchRepre))
+    # Loader_IEMOCAP_OnlyText(appointGender='Female', appointSession=1)
+    trainDataset, testDataset = Loader_IEMOCAP_OnlyText(appointGender='Female', appointSession=1)
+    for batchIndex, [batchData, batchLabel, batchSeq] in enumerate(trainDataset):
+        print(batchIndex, numpy.shape(batchData), numpy.shape(batchSeq), numpy.shape(batchLabel))
         # exit()

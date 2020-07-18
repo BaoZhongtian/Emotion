@@ -11,14 +11,14 @@ class BLSTMwMultiAttention(AttentionBase_Multi):
             featuresNumber=256, cudaFlag=cudaFlag)
         self.moduleName = 'BLSTM-Multi-W-%s' % attentionName[0]
         self.rnnLeftLayer = torch.nn.LSTM(
-            input_size=featuresNumber, hidden_size=128, num_layers=2, bidirectional=True, bias=True)
+            input_size=featuresNumber, hidden_size=128, num_layers=2, bidirectional=True, bias=True, batch_first=True)
         self.rnnRightLayer = torch.nn.LSTM(
-            input_size=320, hidden_size=128, num_layers=2, bidirectional=True, bias=True)
+            input_size=320, hidden_size=128, num_layers=2, bidirectional=True, bias=True, batch_first=True)
         self.predict = torch.nn.Linear(in_features=512, out_features=4)
 
     def forward(self, batchData, batchSeq, batchRepre, batchRepreSeq):
         batchData = batchData.permute([0, 2, 1, 3])
-        batchData = batchData.view(
+        batchData = batchData.reshape(
             [batchData.size()[0], batchData.size()[1], batchData.size()[2] * batchData.size()[3]])
         leftBLSTMResult, _ = self.rnnLeftLayer(batchData)
         leftResult, _ = self.ApplyAttention(

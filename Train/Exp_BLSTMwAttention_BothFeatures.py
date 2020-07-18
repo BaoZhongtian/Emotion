@@ -4,7 +4,7 @@ from Auxiliary.TrainTemplate import Template_FluctuateSize_BothFeatures
 
 if __name__ == '__main__':
     cudaFlag = True
-    metaFlag, multiFlag = False, False
+    metaFlag, multiFlag = False, True
     for attentionName in ['StandardAttention', 'LocalAttention', 'ComponentAttention', 'MonotonicAttention']:
         for appointGender in ['Female', 'Male']:
             for appointSession in range(1, 6):
