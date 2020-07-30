@@ -16,7 +16,10 @@ if __name__ == '__main__':
                     for fileName in os.listdir(os.path.join(loadPath, partName, genderName, sessionName, emotionName)):
                         data = numpy.genfromtxt(
                             fname=os.path.join(loadPath, partName, genderName, sessionName, emotionName, fileName),
-                            dtype=int, delimiter=',')[0:-1]
+                            dtype=int, delimiter=',')
+                        if len(numpy.shape(data)) < 2:
+                            data = numpy.reshape(data, [1, -1])
+                        data = data[:, 0:-1]
                         partData.append(data)
                         partLabel.append(emotionDictionary[emotionName])
                         # print(data)

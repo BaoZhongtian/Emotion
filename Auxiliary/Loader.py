@@ -64,7 +64,7 @@ class Collate_OnlyText:
             padding = numpy.zeros([maxSeqLen - numpy.shape(xs[index])[0], maxCharLen])
             padingXs.append(numpy.concatenate([firstPadResult, padding], axis=0))
         padingXs = torch.LongTensor(padingXs)
-        return padingXs, ys, seqLen
+        return padingXs, seqLen, ys
 
 
 class Collate_BothRepresentation:
