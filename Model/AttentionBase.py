@@ -1,4 +1,5 @@
 import torch
+import numpy
 
 
 class AttentionBase(torch.nn.Module):
@@ -6,17 +7,25 @@ class AttentionBase(torch.nn.Module):
         self.attentionName, self.attentionScope, self.cudaFlag = attentionName, attentionScope, cudaFlag
         super(AttentionBase, self).__init__()
         if attentionName == 'StandardAttention':
-            self.attentionWeightLayer = torch.nn.Linear(in_features=featuresNumber, out_features=1)
+            self.attentionWeightLayer = torch.nn.Linear(in_features=featuresNumber, out_features=1, bias=True)
         if attentionName == 'LocalAttention':
-            self.attentionWeightLayer = torch.nn.Linear(in_features=featuresNumber * attentionScope, out_features=1)
+            self.attentionWeightLayer = torch.nn.Linear(in_features=featuresNumber * attentionScope, out_features=1,
+                                                        bias=True)
         if self.attentionName == 'ComponentAttention':
             self.attentionWeightLayer = torch.nn.Conv2d(
                 in_channels=1, out_channels=featuresNumber, kernel_size=[attentionScope, featuresNumber], stride=[1, 1],
                 padding_mode='VALID')
         if self.attentionName == 'MonotonicAttention':
             self.sumKernel = torch.ones(size=[1, 1, self.attentionScope])
-            self.attentionWeightNumeratorLayer = torch.nn.Linear(in_features=featuresNumber, out_features=1)
-            self.attentionWeightDenominatorLayer = torch.nn.Linear(in_features=featuresNumber, out_features=1)
+            self.attentionWeightNumeratorLayer = torch.nn.Linear(in_features=featuresNumber, out_features=1, bias=True)
+            self.attentionWeightDenominatorLayer = torch.nn.Linear(in_features=featuresNumber, out_features=1,
+                                                                   bias=True)
+        if self.attentionName == 'SelfAttention':
+            self.attentionKeyWeightLayer = torch.nn.Linear(in_features=featuresNumber, out_features=64, bias=True)
+            self.attentionQueryWeightLayer = torch.nn.Linear(in_features=featuresNumber, out_features=64, bias=True)
+            self.attentionValueWeightLayer = torch.nn.Linear(in_features=featuresNumber, out_features=featuresNumber,
+                                                             bias=True)
+            self.attentionWeightLayer = torch.nn.Linear(in_features=featuresNumber, out_features=1, bias=True)
 
     def ApplyAttention(self, dataInput, attentionName, inputSeqLen, hiddenNoduleNumbers):
         if attentionName == 'StandardAttention':
@@ -33,6 +42,9 @@ class AttentionBase(torch.nn.Module):
                 dataInput=dataInput, seqInput=inputSeqLen, hiddenNoduleNumbers=hiddenNoduleNumbers)
         if attentionName == 'QuantumAttention':
             return self.QuantumAttention(
+                dataInput=dataInput, seqInput=inputSeqLen, hiddenNoduleNumbers=hiddenNoduleNumbers)
+        if attentionName == 'SelfAttention':
+            return self.SelfAttention(
                 dataInput=dataInput, seqInput=inputSeqLen, hiddenNoduleNumbers=hiddenNoduleNumbers)
 
     def AttentionMask(self, seqInput):
@@ -154,6 +166,23 @@ class AttentionBase(torch.nn.Module):
         attentionSeparateResult = torch.mul(dataInput, attentionSupplementWeight)
         attentionResult = attentionSeparateResult.sum(dim=1)
         return attentionResult, attentionWeight
+
+    def SelfAttention(self, dataInput, seqInput, hiddenNoduleNumbers):
+        attentionKeyWeight = self.attentionKeyWeightLayer(dataInput)
+        attentionQueryWeight = self.attentionQueryWeightLayer(dataInput)
+        attentionValueWeight = self.attentionValueWeightLayer(dataInput)
+        attentionKQ = attentionKeyWeight.bmm(attentionQueryWeight.permute(0, 2, 1)) / 8
+        attentionKQ = attentionKQ.softmax(dim=-1)
+        attentionResult = attentionKQ.bmm(attentionValueWeight).sum(dim=1)
+        return attentionResult, attentionKQ
+
+        # print(numpy.shape(attentionKeyWeight), numpy.shape(attentionQueryWeight), numpy.shape(attentionValueWeight))
+        # print(numpy.shape(attentionKQ), numpy.shape(attentionResult))
+        # exit()
+        # return self.ApplyAttention(dataInput=attentionResult, attentionName='StandardAttention', inputSeqLen=seqInput,
+        #                            hiddenNoduleNumbers=hiddenNoduleNumbers)
+        # print(numpy.shape(attentionResult))
+        # exit()
 
 
 class AttentionBase_Multi(torch.nn.Module):
