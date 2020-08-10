@@ -112,7 +112,9 @@ def Template_FluctuateSize(Model, trainDataset, testDataset, cudaFlag=True, save
     print(Model)
 
     # In general, using the Adam and Cross Entropy Loss
-    if cudaFlag: Model.cuda()
+    if cudaFlag:
+        Model.cuda()
+        Model.cudaTreatment()
     optimizer = torch.optim.Adam(params=Model.parameters(), lr=learningRate)
 
     lossFunction = torch.nn.CrossEntropyLoss()
