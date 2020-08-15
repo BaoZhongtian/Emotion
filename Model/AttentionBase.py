@@ -196,6 +196,7 @@ class AttentionBase_Multi(torch.nn.Module):
             raise RuntimeError('Please Give Same Length')
 
         self.attentionWeightLayer, self.sumKernel, self.attentionWeightNumeratorLayer, self.attentionWeightDenominatorLayer = {}, {}, {}, {}
+        self.attentionKeyWeightLayer, self.attentionQueryWeightLayer, self.attentionValueWeightLayer = {}, {}, {}
         for index in range(len(attentionName)):
             if attentionName[index] == 'StandardAttention':
                 self.attentionWeightLayer[attentionParameter[index]] = \
@@ -214,6 +215,14 @@ class AttentionBase_Multi(torch.nn.Module):
                 self.attentionWeightDenominatorLayer[attentionParameter[index]] = torch.nn.Linear(
                     in_features=featuresNumber, out_features=1)
 
+            if self.attentionName[index] == 'SelfAttention':
+                self.attentionKeyWeightLayer[attentionParameter[index]] = torch.nn.Linear(
+                    in_features=featuresNumber, out_features=64, bias=True)
+                self.attentionQueryWeightLayer[attentionParameter[index]] = torch.nn.Linear(
+                    in_features=featuresNumber, out_features=64, bias=True)
+                self.attentionValueWeightLayer[attentionParameter[index]] = torch.nn.Linear(
+                    in_features=featuresNumber, out_features=featuresNumber, bias=True)
+
     def ApplyAttention(self, dataInput, attentionName, attentionParameter, inputSeqLen, hiddenNoduleNumbers):
         if attentionName == 'StandardAttention':
             return self.StandardAttention(
@@ -231,6 +240,11 @@ class AttentionBase_Multi(torch.nn.Module):
                 hiddenNoduleNumbers=hiddenNoduleNumbers)
         if attentionName == 'MonotonicAttention':
             return self.MonotonicAttention(
+                dataInput=dataInput, seqInput=inputSeqLen, attentionParameter=attentionParameter,
+                attentionScope=self.attentionScope[self.attentionParameter.index(attentionParameter)],
+                hiddenNoduleNumbers=hiddenNoduleNumbers)
+        if attentionName == 'SelfAttention':
+            return self.SelfAttention(
                 dataInput=dataInput, seqInput=inputSeqLen, attentionParameter=attentionParameter,
                 attentionScope=self.attentionScope[self.attentionParameter.index(attentionParameter)],
                 hiddenNoduleNumbers=hiddenNoduleNumbers)
@@ -328,8 +342,20 @@ class AttentionBase_Multi(torch.nn.Module):
         attentionResult = attentionSeparateResult.sum(dim=1)
         return attentionResult, attentionWeight
 
+    def SelfAttention(self, attentionParameter, attentionScope, dataInput, seqInput, hiddenNoduleNumbers):
+        attentionKeyWeight = self.attentionKeyWeightLayer[attentionParameter](dataInput)
+        attentionQueryWeight = self.attentionQueryWeightLayer[attentionParameter](dataInput)
+        attentionValueWeight = self.attentionValueWeightLayer[attentionParameter](dataInput)
+        attentionKQ = attentionKeyWeight.bmm(attentionQueryWeight.permute(0, 2, 1)) / 8
+        attentionKQ = attentionKQ.softmax(dim=-1)
+        attentionResult = attentionKQ.bmm(attentionValueWeight).sum(dim=1)
+        return attentionResult, attentionKQ
+
     def cudaTreatment(self):
         for sample in self.attentionWeightLayer: self.attentionWeightLayer[sample].cuda()
         for sample in self.sumKernel: self.sumKernel[sample] = self.sumKernel[sample].float().cuda()
         for sample in self.attentionWeightNumeratorLayer: self.attentionWeightNumeratorLayer[sample].cuda()
         for sample in self.attentionWeightDenominatorLayer: self.attentionWeightDenominatorLayer[sample].cuda()
+        for sample in self.attentionKeyWeightLayer: self.attentionKeyWeightLayer[sample].cuda()
+        for sample in self.attentionQueryWeightLayer: self.attentionQueryWeightLayer[sample].cuda()
+        for sample in self.attentionValueWeightLayer: self.attentionValueWeightLayer[sample].cuda()

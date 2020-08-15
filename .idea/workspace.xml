@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="75c22b28-a01e-42ad-8b85-45cf08b2849d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Auxiliary/TrainTemplate.py" beforeDir="false" afterPath="$PROJECT_DIR$/Auxiliary/TrainTemplate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/TCN.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/TCN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auxiliary/Loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/Auxiliary/Loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Auxiliary/Tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/Auxiliary/Tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/AttentionBase.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/AttentionBase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Train/Exp_TCN_Multi.py" beforeDir="false" afterPath="$PROJECT_DIR$/Train/Exp_TCN_Multi.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,10 +20,34 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Model/AttentionBase.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14147">
-              <caret line="330" column="21" selection-start-line="330" selection-start-column="8" selection-end-line="330" selection-end-column="21" />
+            <state relative-caret-position="4902">
+              <caret line="115" selection-start-line="115" selection-end-line="115" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step5_Assembly2Npy.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="688">
+              <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step3_Digitalize.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="516">
+              <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -29,58 +56,43 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Analysis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="10" column="37" lean-forward="true" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+            <state relative-caret-position="129">
+              <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Train/Exp_TCN.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Model/TCN.py">
+        <entry file="file://$PROJECT_DIR$/Auxiliary/Loader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="610">
-              <caret line="70" column="28" selection-start-line="70" selection-start-column="28" selection-end-line="70" selection-end-column="28" />
+            <state relative-caret-position="786">
+              <caret line="393" column="50" selection-start-line="393" selection-start-column="50" selection-end-line="393" selection-end-column="50" />
               <folding>
-                <element signature="e#0#12#0" expanded="true" />
+                <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#109#1535#0" />
+                <element signature="e#200#388#0" />
+                <element signature="e#447#641#0" />
+                <element signature="e#1566#2632#0" />
+                <element signature="e#2673#4338#0" />
+                <element signature="e#4677#4974#0" />
+                <element signature="e#5164#8971#0" />
+                <element signature="e#9165#11369#0" />
+                <element signature="e#11531#16661#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Train/Exp_TCN_Multi.py">
+        <entry file="file://$PROJECT_DIR$/Test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="387">
-              <caret line="11" column="52" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Auxiliary/TrainTemplate.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1333">
-              <caret line="116" column="28" selection-start-line="116" selection-start-column="28" selection-end-line="116" selection-end-column="28" />
+            <state relative-caret-position="515">
+              <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
               <folding>
-                <element signature="e#0#9#0" expanded="true" />
-                <element signature="e#148#570#0" />
-                <element signature="e#859#2691#0" />
-                <element signature="e#2950#4771#0" />
+                <element signature="e#0#30#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -116,7 +128,6 @@
         <option value="$PROJECT_DIR$/Train/Exp_EncoderDecoder.py" />
         <option value="$PROJECT_DIR$/Model/EncoderDecoder.py" />
         <option value="$PROJECT_DIR$/Train/Exp_CNNEncoderDecoder.py" />
-        <option value="$PROJECT_DIR$/Auxiliary/Tools.py" />
         <option value="$PROJECT_DIR$/Train/Exp_ValidTest.py" />
         <option value="$PROJECT_DIR$/Train/Exp_MiddleResultGeneration.py" />
         <option value="$PROJECT_DIR$/Train/Exp_BLSTMwAttention.py" />
@@ -132,16 +143,22 @@
         <option value="$PROJECT_DIR$/Pretreatment/Audio&amp;Text/Step5_TextAssembly.py" />
         <option value="$PROJECT_DIR$/Pretreatment/Audio&amp;Text/Step5_TextDigitalize.py" />
         <option value="$PROJECT_DIR$/Pretreatment/Audio&amp;Text/Step6_TextAssembly.py" />
-        <option value="$PROJECT_DIR$/Auxiliary/Loader.py" />
         <option value="$PROJECT_DIR$/Model/HierarchyNetwork.py" />
-        <option value="$PROJECT_DIR$/Test.py" />
         <option value="$PROJECT_DIR$/Train/Exp_OnlyText.py" />
         <option value="$PROJECT_DIR$/Train/Exp_TCN.py" />
-        <option value="$PROJECT_DIR$/Model/AttentionBase.py" />
         <option value="$PROJECT_DIR$/Auxiliary/TrainTemplate.py" />
-        <option value="$PROJECT_DIR$/Train/Exp_TCN_Multi.py" />
-        <option value="$PROJECT_DIR$/Analysis.py" />
         <option value="$PROJECT_DIR$/Model/TCN.py" />
+        <option value="$PROJECT_DIR$/Model/AttentionBase.py" />
+        <option value="$PROJECT_DIR$/Train/Exp_TCN_Multi.py" />
+        <option value="$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step1_ChooseText.py" />
+        <option value="$PROJECT_DIR$/Auxiliary/Tools.py" />
+        <option value="$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step2_CMULabel.py" />
+        <option value="$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step4_EmotionAmplify.py" />
+        <option value="$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step5_Assembly2Npy.py" />
+        <option value="$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step3_Digitalize.py" />
+        <option value="$PROJECT_DIR$/Auxiliary/Loader.py" />
+        <option value="$PROJECT_DIR$/Analysis.py" />
+        <option value="$PROJECT_DIR$/Test.py" />
       </list>
     </option>
   </component>
@@ -159,6 +176,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -171,38 +189,16 @@
               <item name="Emotion" type="462c0819:PsiDirectoryNode" />
               <item name="Auxiliary" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Emotion" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Emotion" type="462c0819:PsiDirectoryNode" />
-              <item name="Model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Emotion" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Emotion" type="462c0819:PsiDirectoryNode" />
-              <item name="Pretreatment" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Emotion" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Emotion" type="462c0819:PsiDirectoryNode" />
-              <item name="Pretreatment" type="462c0819:PsiDirectoryNode" />
-              <item name="Audio&amp;Text" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Emotion" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Emotion" type="462c0819:PsiDirectoryNode" />
-              <item name="Train" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Train" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
@@ -228,7 +224,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Analysis">
+  <component name="RunManager" selected="Python.Test">
     <configuration name="Analysis" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true">
       <module name="Emotion" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -251,7 +247,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Exp_OnlyText" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true">
+    <configuration name="Loader" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true">
       <module name="Emotion" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -259,12 +255,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="C:\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Train" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Auxiliary" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Train/Exp_OnlyText.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Auxiliary/Loader.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -273,7 +269,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Exp_TCN" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true">
+    <configuration name="Step3_Digitalize" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true">
       <module name="Emotion" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -281,12 +277,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="C:\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Train" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Pretreatment/SpeechTranslation" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Train/Exp_TCN.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step3_Digitalize.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -295,7 +291,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Exp_TCN_Multi" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true">
+    <configuration name="Step5_Assembly2Npy" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true">
       <module name="Emotion" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -303,12 +299,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="C:\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Train" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Pretreatment/SpeechTranslation" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Train/Exp_TCN_Multi.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step5_Assembly2Npy.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -317,7 +313,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="TCN" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true">
+    <configuration name="Test" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true">
       <module name="Emotion" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -325,12 +321,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="C:\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Model" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Model/TCN.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -362,19 +358,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.Exp_OnlyText" />
+      <item itemvalue="Python.Step3_Digitalize" />
+      <item itemvalue="Python.Step5_Assembly2Npy" />
       <item itemvalue="Python.Analysis" />
-      <item itemvalue="Python.TCN" />
-      <item itemvalue="Python.Exp_TCN" />
-      <item itemvalue="Python.Exp_TCN_Multi" />
+      <item itemvalue="Python.Loader" />
+      <item itemvalue="Python.Test" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Test" />
         <item itemvalue="Python.Analysis" />
-        <item itemvalue="Python.Exp_TCN_Multi" />
-        <item itemvalue="Python.TCN" />
-        <item itemvalue="Python.Exp_TCN" />
-        <item itemvalue="Python.Exp_OnlyText" />
+        <item itemvalue="Python.Loader" />
+        <item itemvalue="Python.Step3_Digitalize" />
+        <item itemvalue="Python.Step5_Assembly2Npy" />
       </list>
     </recent_temporary>
   </component>
@@ -428,12 +424,19 @@
       <workItem from="1596115049788" duration="2490000" />
       <workItem from="1596162612366" duration="14000" />
       <workItem from="1596954939258" duration="3625000" />
-      <workItem from="1597016887286" duration="2909000" />
+      <workItem from="1597016887286" duration="4006000" />
+      <workItem from="1597025839188" duration="1589000" />
+      <workItem from="1597027998360" duration="7239000" />
+      <workItem from="1597108722709" duration="6842000" />
+      <workItem from="1597128996842" duration="1815000" />
+      <workItem from="1597230453545" duration="73000" />
+      <workItem from="1597392128836" duration="938000" />
+      <workItem from="1597456890707" duration="600000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139900000" />
+    <option name="totallyTimeSpent" value="160093000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -441,7 +444,7 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="2" weight="0.27292112" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.2761194" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286334" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.35900217" />
@@ -458,8 +461,9 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" weight="0.32995737" />
+      <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.32995737" />
       <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" x="0" y="0" width="434" height="856" id="Documentation" order="5" side_tool="true" visible="true" weight="0.32995737" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -469,28 +473,33 @@
     <SUITE FILE_PATH="coverage/Emotion$Exp_OnlyText.coverage" NAME="Exp_OnlyText Coverage Results" MODIFIED="1595060943215" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Train" />
     <SUITE FILE_PATH="coverage/Emotion$Step3_SpectrumGeneration.coverage" NAME="Step3_SpectrumGeneration Coverage Results" MODIFIED="1594960961232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/Audio&amp;Text" />
     <SUITE FILE_PATH="coverage/Emotion$Step6_TextAssembly.coverage" NAME="Step6_TextAssembly Coverage Results" MODIFIED="1595058887416" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/Audio&amp;Text" />
+    <SUITE FILE_PATH="coverage/Emotion$Step2_CMULabel.coverage" NAME="Step2_CMULabel Coverage Results" MODIFIED="1597043276643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/SpeechTranslation" />
+    <SUITE FILE_PATH="coverage/Emotion$Step4_EmotionAmplify.coverage" NAME="Step4_EmotionAmplify Coverage Results" MODIFIED="1597043764015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/SpeechTranslation" />
     <SUITE FILE_PATH="coverage/Emotion$TrainTemplate.coverage" NAME="TrainTemplate Coverage Results" MODIFIED="1592361675764" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Auxiliary" />
     <SUITE FILE_PATH="coverage/Emotion$Exp_EncoderDecoder.coverage" NAME="Exp_EncoderDecoder Coverage Results" MODIFIED="1591421123627" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Train" />
     <SUITE FILE_PATH="coverage/Emotion$HierarchyNetwork.coverage" NAME="HierarchyNetwork Coverage Results" MODIFIED="1595060357407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Model" />
     <SUITE FILE_PATH="coverage/Emotion$Step2_AudioTextCheck.coverage" NAME="Step2_AudioTextCheck Coverage Results" MODIFIED="1594960335438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/Audio&amp;Text" />
+    <SUITE FILE_PATH="coverage/Emotion$Step3_Digitalize.coverage" NAME="Step3_Digitalize Coverage Results" MODIFIED="1597112286513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/SpeechTranslation" />
     <SUITE FILE_PATH="coverage/Emotion$EncoderDecoder.coverage" NAME="EncoderDecoder Coverage Results" MODIFIED="1591595533933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Model" />
     <SUITE FILE_PATH="coverage/Emotion$Exp_CNNEncoderDecoder.coverage" NAME="Exp_CNNEncoderDecoder Coverage Results" MODIFIED="1591671157969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Train" />
     <SUITE FILE_PATH="coverage/Emotion$Step3_Assembly2Npy.coverage" NAME="Step3_Assembly2Npy Coverage Results" MODIFIED="1590584235937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment" />
     <SUITE FILE_PATH="coverage/Emotion$Step1_TextChoose.coverage" NAME="Step1_TextChoose Coverage Results" MODIFIED="1594958170884" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/Audio&amp;Text" />
     <SUITE FILE_PATH="coverage/Emotion$Step5_TextAssembly.coverage" NAME="Step5_TextAssembly Coverage Results" MODIFIED="1594996065318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/Audio&amp;Text" />
-    <SUITE FILE_PATH="coverage/Emotion$Test.coverage" NAME="Test Coverage Results" MODIFIED="1592035597199" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Emotion$BLSTMwMultiAttention.coverage" NAME="BLSTMwMultiAttention Coverage Results" MODIFIED="1592656811622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Model" />
     <SUITE FILE_PATH="coverage/Emotion$TCN.coverage" NAME="TCN Coverage Results" MODIFIED="1596957055163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Model" />
+    <SUITE FILE_PATH="coverage/Emotion$Test.coverage" NAME="Test Coverage Results" MODIFIED="1597392430869" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Emotion$Exp_TCN.coverage" NAME="Exp_TCN Coverage Results" MODIFIED="1596092048423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Train" />
     <SUITE FILE_PATH="coverage/Emotion$Step1_TextGeneration.coverage" NAME="Step1_TextGeneration Coverage Results" MODIFIED="1594958825159" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/Audio&amp;Text" />
-    <SUITE FILE_PATH="coverage/Emotion$Analysis.coverage" NAME="Analysis Coverage Results" MODIFIED="1597019601296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Emotion$Analysis.coverage" NAME="Analysis Coverage Results" MODIFIED="1597129242157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Emotion$Step1_SpectrumGeneration.coverage" NAME="Step1_SpectrumGeneration Coverage Results" MODIFIED="1590563663049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment" />
     <SUITE FILE_PATH="coverage/Emotion$Step5_TextDigitalize.coverage" NAME="Step5_TextDigitalize Coverage Results" MODIFIED="1595046203000" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/Audio&amp;Text" />
-    <SUITE FILE_PATH="coverage/Emotion$Loader.coverage" NAME="Loader Coverage Results" MODIFIED="1595057555851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Auxiliary" />
-    <SUITE FILE_PATH="coverage/Emotion$Exp_TCN_Multi.coverage" NAME="Exp_TCN_Multi Coverage Results" MODIFIED="1596957779137" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Train" />
+    <SUITE FILE_PATH="coverage/Emotion$Step1_ChooseText.coverage" NAME="Step1_ChooseText Coverage Results" MODIFIED="1597042971195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/SpeechTranslation" />
+    <SUITE FILE_PATH="coverage/Emotion$Loader.coverage" NAME="Loader Coverage Results" MODIFIED="1597114773496" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Auxiliary" />
+    <SUITE FILE_PATH="coverage/Emotion$Exp_TCN_Multi.coverage" NAME="Exp_TCN_Multi Coverage Results" MODIFIED="1597027322195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Train" />
     <SUITE FILE_PATH="coverage/Emotion$Exp_BLSTMwAttention_BothFeatures.coverage" NAME="Exp_BLSTMwAttention_BothFeatures Coverage Results" MODIFIED="1592661623031" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Train" />
     <SUITE FILE_PATH="coverage/Emotion$Exp_MiddleResultGeneration.coverage" NAME="Exp_MiddleResultGeneration Coverage Results" MODIFIED="1592035104657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Train" />
     <SUITE FILE_PATH="coverage/Emotion$Exp_BLSTMwAttention.coverage" NAME="Exp_BLSTMwAttention Coverage Results" MODIFIED="1592362243905" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Train" />
+    <SUITE FILE_PATH="coverage/Emotion$Step5_Assembly2Npy.coverage" NAME="Step5_Assembly2Npy Coverage Results" MODIFIED="1597112244670" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/SpeechTranslation" />
     <SUITE FILE_PATH="coverage/Emotion$Exp_ValidTest.coverage" NAME="Exp_ValidTest Coverage Results" MODIFIED="1591673849613" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Train" />
     <SUITE FILE_PATH="coverage/Emotion$Step4_Normalization.coverage" NAME="Step4_Normalization Coverage Results" MODIFIED="1594961413892" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment/Audio&amp;Text" />
     <SUITE FILE_PATH="coverage/Emotion$Step2_Normalization.coverage" NAME="Step2_Normalization Coverage Results" MODIFIED="1590565196379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Pretreatment" />
@@ -547,13 +556,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="145">
           <caret line="331" selection-start-line="331" selection-end-line="331" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Auxiliary/Tools.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
@@ -706,28 +708,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Auxiliary/Loader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="860">
-          <caret line="145" lean-forward="true" selection-start-line="145" selection-end-line="145" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-            <element signature="e#200#388#0" />
-            <element signature="e#447#641#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Model/AttentionBase.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14147">
-          <caret line="330" column="21" selection-start-line="330" selection-start-column="8" selection-end-line="330" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Train/Exp_TCN.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
@@ -738,9 +718,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Model/TCN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="786">
+          <caret line="31" column="43" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Train/Exp_TCN_Multi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="17" column="45" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Auxiliary/TrainTemplate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1333">
+        <state relative-caret-position="786">
           <caret line="116" column="28" selection-start-line="116" selection-start-column="28" selection-end-line="116" selection-end-column="28" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -751,36 +748,99 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test.py">
+    <entry file="file://$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step1_SeparateFold.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="4" selection-start-column="4" selection-end-column="4" />
+        <state relative-caret-position="215">
+          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Analysis.py">
+    <entry file="file://$PROJECT_DIR$/Auxiliary/Tools.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="10" column="37" lean-forward="true" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+        <state relative-caret-position="-387">
+          <caret column="9" selection-start-column="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step2_CMULabel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="4" column="46" lean-forward="true" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step4_EmotionAmplify.py" />
+    <entry file="file://$PROJECT_DIR$/Model/AttentionBase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4902">
+          <caret line="115" selection-start-line="115" selection-end-line="115" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Train/Exp_TCN_Multi.py">
+    <entry file="file://$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step5_Assembly2Npy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="11" column="52" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
+        <state relative-caret-position="688">
+          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Model/TCN.py">
+    <entry file="file://$PROJECT_DIR$/Pretreatment/SpeechTranslation/Step3_Digitalize.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="610">
-          <caret line="70" column="28" selection-start-line="70" selection-start-column="28" selection-end-line="70" selection-end-column="28" />
+        <state relative-caret-position="516">
+          <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="515">
+          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Auxiliary/Loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="786">
+          <caret line="393" column="50" selection-start-line="393" selection-start-column="50" selection-end-line="393" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#109#1535#0" />
+            <element signature="e#200#388#0" />
+            <element signature="e#447#641#0" />
+            <element signature="e#1566#2632#0" />
+            <element signature="e#2673#4338#0" />
+            <element signature="e#4677#4974#0" />
+            <element signature="e#5164#8971#0" />
+            <element signature="e#9165#11369#0" />
+            <element signature="e#11531#16661#0" />
           </folding>
         </state>
       </provider>

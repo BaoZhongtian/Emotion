@@ -126,8 +126,8 @@ class Dataset_BothRepresentation(torch_utils_data.Dataset):
         return self.data[index], self.representation[index], self.label[index]
 
 
-def Loader_IEMOCAP(includePart=['improve', 'script'], appointGender=None, appointSession=None, batchSize=64,
-                   multiFlag=False, shuffleFlag=True):
+def Loader_IEMOCAP(includePart=['improve', 'script'], appointShape=None, appointGender=None, appointSession=None,
+                   batchSize=64, multiFlag=False, shuffleFlag=True):
     def ConcatData(inputData):
         totalConcatData = []
         for sample in inputData:
@@ -165,6 +165,28 @@ def Loader_IEMOCAP(includePart=['improve', 'script'], appointGender=None, appoin
                     trainData.extend(currentData)
                     trainLabel.extend(currentLabel)
     print(numpy.shape(trainData), numpy.shape(trainLabel), numpy.shape(testData), numpy.shape(testLabel))
+
+    if appointShape is not None:
+        neoTrainData, neoTestData = [], []
+        for sample in trainData:
+            if numpy.shape(sample)[0] <= appointShape:
+                pad = numpy.zeros([appointShape - numpy.shape(sample)[0], numpy.shape(sample)[1]])
+                current = numpy.concatenate([sample, pad], axis=0)
+                neoTrainData.append(current)
+            else:
+                neoTrainData.append(sample[0:appointShape])
+
+        for sample in testData:
+            if numpy.shape(sample)[0] <= appointShape:
+                pad = numpy.zeros([appointShape - numpy.shape(sample)[0], numpy.shape(sample)[1]])
+                current = numpy.concatenate([sample, pad], axis=0)
+                neoTestData.append(current)
+            else:
+                neoTestData.append(sample[0:appointShape])
+        print(numpy.shape(neoTrainData), numpy.shape(neoTestData))
+        trainData = neoTrainData
+        testData = neoTestData
+        # exit()
 
     if multiFlag:
         trainDataset = Dataset_IEMOCAP(data=ConcatData(trainData), label=trainLabel)
@@ -352,9 +374,29 @@ def Loader_IEMOCAP_OnlyText(appointGender=None, appointSession=None, batchSize=6
                                            collate_fn=Collate_OnlyText()), None
 
 
+def Loader_IEMOCAP_SER(shuffleFlag=True):
+    loadPath = 'D:/PythonProjects_Data/IEMOCAP/Text/SER-CTC-EmotionAmplify/'
+    totalData, totalLabel = [], []
+    for part in ['impro', 'script']:
+        for gender in ['Female', 'Male']:
+            for session in range(1, 6):
+                partData = numpy.load(os.path.join(loadPath, '%s-Session%d-%s-Data.npy' % (part, session, gender)))
+                partLabel = numpy.load(os.path.join(loadPath, '%s-Session%d-%s-Label.npy' % (part, session, gender)))
+                totalData.extend(partData)
+                totalLabel.extend(partLabel)
+                print(numpy.shape(partData), numpy.shape(partLabel))
+    dataset = Dataset_IEMOCAP(totalData, totalLabel)
+    return torch_utils_data.DataLoader(dataset=dataset, batch_size=1, shuffle=shuffleFlag)
+
+
 if __name__ == '__main__':
-    # Loader_IEMOCAP_OnlyText(appointGender='Female', appointSession=1)
-    trainDataset, testDataset = Loader_IEMOCAP_OnlyText(appointGender='Female', appointSession=1)
-    for batchIndex, [batchData, batchLabel, batchSeq] in enumerate(trainDataset):
-        print(batchIndex, numpy.shape(batchData), numpy.shape(batchSeq), numpy.shape(batchLabel))
-        # exit()
+    trainDataset = Loader_IEMOCAP_SER()
+    for batchIndex, [batchData, batchLabel] in enumerate(trainDataset):
+        print(batchIndex, numpy.shape(batchData), numpy.shape(batchLabel))
+    # trainDataset, testDataset = Loader_IEMOCAP(appointShape=500, appointSession=1, appointGender='Female',
+    #                                            multiFlag=True)
+    # # Loader_IEMOCAP_OnlyText(appointGender='Female', appointSession=1)
+    # # trainDataset, testDataset = Loader_IEMOCAP_OnlyText(appointGender='Female', appointSession=1)
+    # for batchIndex, [batchData, batchLabel, batchSeq] in enumerate(trainDataset):
+    #     print(batchIndex, numpy.shape(batchData), numpy.shape(batchSeq), numpy.shape(batchLabel))
+    #     exit()
