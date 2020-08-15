@@ -126,24 +126,25 @@ class Dataset_BothRepresentation(torch_utils_data.Dataset):
         return self.data[index], self.representation[index], self.label[index]
 
 
+def ConcatData(inputData):
+    totalConcatData = []
+    for sample in inputData:
+        delta, deltaDelta = [], []
+        for index in range(1, len(sample)):
+            delta.append(sample[index] - sample[index - 1])
+        delta = numpy.array(delta)
+        for index in range(1, len(delta)):
+            deltaDelta.append(delta[index] - delta[index - 1])
+        deltaDelta = numpy.array(deltaDelta)
+
+        concatData = numpy.concatenate(
+            [sample[numpy.newaxis, :-2, :], delta[numpy.newaxis, :-1, :], deltaDelta[numpy.newaxis, :, :]], axis=0)
+        totalConcatData.append(concatData)
+    return totalConcatData
+
+
 def Loader_IEMOCAP(includePart=['improve', 'script'], appointShape=None, appointGender=None, appointSession=None,
                    batchSize=64, multiFlag=False, shuffleFlag=True):
-    def ConcatData(inputData):
-        totalConcatData = []
-        for sample in inputData:
-            delta, deltaDelta = [], []
-            for index in range(1, len(sample)):
-                delta.append(sample[index] - sample[index - 1])
-            delta = numpy.array(delta)
-            for index in range(1, len(delta)):
-                deltaDelta.append(delta[index] - delta[index - 1])
-            deltaDelta = numpy.array(deltaDelta)
-
-            concatData = numpy.concatenate(
-                [sample[numpy.newaxis, :-2, :], delta[numpy.newaxis, :-1, :], deltaDelta[numpy.newaxis, :, :]], axis=0)
-            totalConcatData.append(concatData)
-        return totalConcatData
-
     loadPath = 'D:/PythonProjects_Data/IEMOCAP/DataSource_Audio/'
     trainData, trainLabel, testData, testLabel = [], [], [], []
 
@@ -389,10 +390,77 @@ def Loader_IEMOCAP_SER(shuffleFlag=True):
     return torch_utils_data.DataLoader(dataset=dataset, batch_size=1, shuffle=shuffleFlag)
 
 
+def Loader_FAUAEC(batchSize=32, appointShape=None, shuffleFlag=True, multiFlag=True):
+    loadPath = 'D:/PythonProjects_Data/FAU-AEC/DataSource_Audio/'
+    trainData, trainLabel, testData, testLabel = [], [], [], []
+    for emotionPart in ['A', 'E', 'N', 'P', 'R']:
+        partData = numpy.load(os.path.join(loadPath, 'Ohm-%s.npy' % emotionPart), allow_pickle=True)
+        partLabel = numpy.zeros(5)
+        partLabel[['A', 'E', 'N', 'P', 'R'].index(emotionPart)] = 1
+        partLabel = numpy.array([partLabel for _ in range(len(partData))])
+        trainData.extend(partData)
+        trainLabel.extend(partLabel)
+
+    for emotionPart in ['A', 'E', 'N', 'P', 'R']:
+        partData = numpy.load(os.path.join(loadPath, 'Mont-%s.npy' % emotionPart), allow_pickle=True)
+        partLabel = numpy.zeros(5)
+        partLabel[['A', 'E', 'N', 'P', 'R'].index(emotionPart)] = 1
+        partLabel = numpy.array([partLabel for _ in range(len(partData))])
+        testData.extend(partData)
+        testLabel.extend(partLabel)
+
+    if appointShape is not None:
+        neoTrainData, neoTestData = [], []
+        for sample in trainData:
+            if numpy.shape(sample)[0] <= appointShape:
+                pad = numpy.zeros([appointShape - numpy.shape(sample)[0], numpy.shape(sample)[1]])
+                current = numpy.concatenate([sample, pad], axis=0)
+                neoTrainData.append(current)
+            else:
+                neoTrainData.append(sample[0:appointShape])
+
+        for sample in testData:
+            if numpy.shape(sample)[0] <= appointShape:
+                pad = numpy.zeros([appointShape - numpy.shape(sample)[0], numpy.shape(sample)[1]])
+                current = numpy.concatenate([sample, pad], axis=0)
+                neoTestData.append(current)
+            else:
+                neoTestData.append(sample[0:appointShape])
+        print(numpy.shape(neoTrainData), numpy.shape(neoTestData))
+        trainData = neoTrainData
+        testData = neoTestData
+
+    print(numpy.shape(trainData), numpy.shape(trainLabel), numpy.sum(trainLabel, axis=0))
+    print(numpy.shape(testData), numpy.shape(testLabel), numpy.sum(testLabel, axis=0))
+
+    trainLabel = numpy.argmax(trainLabel, axis=1)
+    testLabel = numpy.argmax(testLabel, axis=1)
+
+    print(numpy.shape(trainData[0]))
+
+    if multiFlag:
+        trainDataset = Dataset_IEMOCAP(data=ConcatData(trainData), label=trainLabel)
+        testDataset = Dataset_IEMOCAP(data=ConcatData(testData), label=trainLabel)
+        return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=shuffleFlag,
+                                           collate_fn=Collate_IEMOCAP()), \
+               torch_utils_data.DataLoader(dataset=testDataset, batch_size=batchSize, shuffle=False,
+                                           collate_fn=Collate_IEMOCAP())
+    else:
+        trainDataset = Dataset_IEMOCAP(data=trainData, label=trainLabel)
+        testDataset = Dataset_IEMOCAP(data=testData, label=testLabel)
+        return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=shuffleFlag,
+                                           collate_fn=Collate_IEMOCAP()), \
+               torch_utils_data.DataLoader(dataset=testDataset, batch_size=batchSize, shuffle=False,
+                                           collate_fn=Collate_IEMOCAP())
+
+
 if __name__ == '__main__':
-    trainDataset = Loader_IEMOCAP_SER()
-    for batchIndex, [batchData, batchLabel] in enumerate(trainDataset):
-        print(batchIndex, numpy.shape(batchData), numpy.shape(batchLabel))
+    trainDataset, testDataset = Loader_FAUAEC(appointShape=500)
+    for batchIndex, [batchData, batchSeq, batchLabel] in enumerate(trainDataset):
+        print(batchIndex, numpy.shape(batchData), numpy.shape(batchSeq), numpy.shape(batchLabel))
+    # trainDataset = Loader_IEMOCAP_SER()
+    # for batchIndex, [batchData, batchLabel] in enumerate(trainDataset):
+    #     print(batchIndex, numpy.shape(batchData), numpy.shape(batchLabel))
     # trainDataset, testDataset = Loader_IEMOCAP(appointShape=500, appointSession=1, appointGender='Female',
     #                                            multiFlag=True)
     # # Loader_IEMOCAP_OnlyText(appointGender='Female', appointSession=1)

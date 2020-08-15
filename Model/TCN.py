@@ -5,7 +5,7 @@ from Model.AttentionBase import AttentionBase, AttentionBase_Multi
 
 
 class TCN(AttentionBase):
-    def __init__(self, attentionName, attentionScope, cudaFlag):
+    def __init__(self, attentionName, attentionScope, cudaFlag, labelNumber=4):
         super(TCN, self).__init__(attentionName=attentionName, attentionScope=attentionScope,
                                   featuresNumber=128, cudaFlag=cudaFlag)
         self.tcnLayer1st = torch.nn.Conv1d(
@@ -18,7 +18,7 @@ class TCN(AttentionBase):
             in_channels=128, out_channels=128, kernel_size=3, stride=1, dilation=8, bias=True)
         self.tcnLayer5th = torch.nn.Conv1d(
             in_channels=128, out_channels=128, kernel_size=3, stride=1, dilation=16, bias=True)
-        self.predictLayer = torch.nn.Linear(in_features=128, out_features=4, bias=True)
+        self.predictLayer = torch.nn.Linear(in_features=128, out_features=labelNumber, bias=True)
 
     def forward(self, inputData, inputSeqLen):
         inputData = inputData.permute(0, 1, 3, 2)
@@ -37,9 +37,12 @@ class TCN(AttentionBase):
         predict = self.predictLayer(attentionResult)
         return predict, attentionMap
 
+    def cudaTreatment(self):
+        pass
+
 
 class TCN_Multi(AttentionBase_Multi):
-    def __init__(self, attentionName, attentionScope, attentionParameter, cudaFlag):
+    def __init__(self, attentionName, attentionScope, attentionParameter, cudaFlag, labelNumber=4):
         super(TCN_Multi, self).__init__(attentionName=attentionName, attentionScope=attentionScope,
                                         attentionParameter=attentionParameter, featuresNumber=128, cudaFlag=cudaFlag)
         self.tcnLayer1st = torch.nn.Conv1d(
@@ -52,7 +55,8 @@ class TCN_Multi(AttentionBase_Multi):
             in_channels=128, out_channels=128, kernel_size=3, stride=1, dilation=8, bias=True)
         self.tcnLayer5th = torch.nn.Conv1d(
             in_channels=128, out_channels=128, kernel_size=3, stride=1, dilation=16, bias=True)
-        self.predictLayer = torch.nn.Linear(in_features=128 * len(self.attentionName), out_features=4, bias=True)
+        self.predictLayer = torch.nn.Linear(in_features=128 * len(self.attentionName), out_features=labelNumber,
+                                            bias=True)
 
     def forward(self, inputData, inputSeqLen):
         inputData = inputData.permute(0, 1, 3, 2)

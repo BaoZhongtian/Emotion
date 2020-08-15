@@ -103,7 +103,7 @@ def TrainTemplate_CNN_Meta(encoder, decoder, trainDataset, cudaFlag, learningRat
 
 
 def Template_FluctuateSize(Model, trainDataset, testDataset, cudaFlag=True, saveFlag=True, savePath=None,
-                           learningRate=1E-3, episodeNumber=100):
+                           learningRate=1E-3, episodeNumber=100, labelWeight=None):
     # Check the Path
     if os.path.exists(savePath): return
     os.makedirs(savePath)
@@ -117,7 +117,12 @@ def Template_FluctuateSize(Model, trainDataset, testDataset, cudaFlag=True, save
         Model.cudaTreatment()
     optimizer = torch.optim.Adam(params=Model.parameters(), lr=learningRate)
 
-    lossFunction = torch.nn.CrossEntropyLoss()
+    if labelWeight is not None:
+        labelWeight = torch.FloatTensor(labelWeight)
+        if cudaFlag: labelWeight = labelWeight.cuda()
+        lossFunction = torch.nn.CrossEntropyLoss(weight=labelWeight)
+    else:
+        lossFunction = torch.nn.CrossEntropyLoss()
 
     for episode in range(episodeNumber):
         episodeLoss = 0.0
