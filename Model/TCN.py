@@ -72,9 +72,6 @@ class TCN_Multi(AttentionBase_Multi):
         tcn5th = self.tcnLayer5th(tcn4th).relu().permute(0, 2, 1)
         totalAttentionResult, totalAttentionMap = [], []
         for index in range(len(self.attentionName)):
-            # print(self.attentionParameter)
-            # print(self.attentionName)
-            # exit()
             attentionResult, attentionMap = self.ApplyAttention(
                 dataInput=tcn5th, attentionName=self.attentionName[index],
                 attentionParameter=self.attentionParameter[index], inputSeqLen=inputSeqLen, hiddenNoduleNumbers=128)
@@ -89,12 +86,13 @@ if __name__ == '__main__':
     # model = TCN(attentionName='SelfAttention', attentionScope=0, cudaFlag=False)
     model = TCN_Multi(attentionName=['StandardAttention' for _ in range(2)], attentionScope=[0 for _ in range(2)],
                       attentionParameter=['Head%02d' % index for index in range(2)], cudaFlag=False)
+
     for appointGender in ['Female', 'Male']:
         for appointSession in range(1, 6):
             trainDataset, testDataset = Loader_IEMOCAP(appointGender=appointGender, appointSession=appointSession,
                                                        multiFlag=True)
             for batchNumber, (batchData, batchSeq, batchLabel) in enumerate(trainDataset):
                 print(numpy.shape(batchData), numpy.shape(batchSeq), numpy.shape(batchLabel))
-                result = model(batchData, batchSeq)
+                result, _ = model(batchData, batchSeq)
                 print(numpy.shape(result))
                 exit()

@@ -436,11 +436,13 @@ def Loader_FAUAEC(batchSize=32, appointShape=None, shuffleFlag=True, multiFlag=T
     trainLabel = numpy.argmax(trainLabel, axis=1)
     testLabel = numpy.argmax(testLabel, axis=1)
 
-    print(numpy.shape(trainData[0]))
-
+    # print(numpy.shape(trainData[0]))
+    # print(trainLabel[-100:])
+    # print(testLabel[-100:])
+    # exit()
     if multiFlag:
         trainDataset = Dataset_IEMOCAP(data=ConcatData(trainData), label=trainLabel)
-        testDataset = Dataset_IEMOCAP(data=ConcatData(testData), label=trainLabel)
+        testDataset = Dataset_IEMOCAP(data=ConcatData(testData), label=testLabel)
         return torch_utils_data.DataLoader(dataset=trainDataset, batch_size=batchSize, shuffle=shuffleFlag,
                                            collate_fn=Collate_IEMOCAP()), \
                torch_utils_data.DataLoader(dataset=testDataset, batch_size=batchSize, shuffle=False,
@@ -456,8 +458,9 @@ def Loader_FAUAEC(batchSize=32, appointShape=None, shuffleFlag=True, multiFlag=T
 
 if __name__ == '__main__':
     trainDataset, testDataset = Loader_FAUAEC(appointShape=500)
-    for batchIndex, [batchData, batchSeq, batchLabel] in enumerate(trainDataset):
-        print(batchIndex, numpy.shape(batchData), numpy.shape(batchSeq), numpy.shape(batchLabel))
+    for batchIndex, [batchData, batchSeq, batchLabel] in enumerate(testDataset):
+        # print(batchIndex, numpy.shape(batchData), numpy.shape(batchSeq), numpy.shape(batchLabel))
+        print(batchLabel)
     # trainDataset = Loader_IEMOCAP_SER()
     # for batchIndex, [batchData, batchLabel] in enumerate(trainDataset):
     #     print(batchIndex, numpy.shape(batchData), numpy.shape(batchLabel))

@@ -103,7 +103,7 @@ def TrainTemplate_CNN_Meta(encoder, decoder, trainDataset, cudaFlag, learningRat
 
 
 def Template_FluctuateSize(Model, trainDataset, testDataset, cudaFlag=True, saveFlag=True, savePath=None,
-                           learningRate=1E-3, episodeNumber=100, labelWeight=None):
+                           learningRate=1E-3, episodeNumber=100, labelWeight=None, weightDecay=None):
     # Check the Path
     if os.path.exists(savePath): return
     os.makedirs(savePath)
@@ -115,7 +115,10 @@ def Template_FluctuateSize(Model, trainDataset, testDataset, cudaFlag=True, save
     if cudaFlag:
         Model.cuda()
         Model.cudaTreatment()
-    optimizer = torch.optim.Adam(params=Model.parameters(), lr=learningRate)
+    if weightDecay is not None:
+        optimizer = torch.optim.Adam(params=Model.parameters(), lr=learningRate, weight_decay=weightDecay)
+    else:
+        optimizer = torch.optim.Adam(params=Model.parameters(), lr=learningRate)
 
     if labelWeight is not None:
         labelWeight = torch.FloatTensor(labelWeight)
@@ -126,6 +129,7 @@ def Template_FluctuateSize(Model, trainDataset, testDataset, cudaFlag=True, save
 
     for episode in range(episodeNumber):
         episodeLoss = 0.0
+        Model.train()
         with open(os.path.join(savePath, 'Loss-%04d.csv' % episode), 'w') as file:
             for batchNumber, (batchData, batchSeq, batchLabel) in enumerate(trainDataset):
                 if cudaFlag:
@@ -147,6 +151,7 @@ def Template_FluctuateSize(Model, trainDataset, testDataset, cudaFlag=True, save
 
         if saveFlag: torch.save(obj=Model, f=os.path.join(savePath, 'Network-%04d.pkl' % episode))
 
+        Model.eval()
         testProbability, testPartPredict, testPartLabel = [], [], []
         for batchNumber, (batchData, batchSeq, batchLabel) in enumerate(testDataset):
             if cudaFlag:

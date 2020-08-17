@@ -6,7 +6,7 @@ if __name__ == '__main__':
     cudaFlag = True
     headNumber = 2
     # metaFlag, multiFlag = False, False
-    for attentionName in ['SelfAttention']:
+    for attentionName in ['StandardAttention']:
         for appointGender in ['Female', 'Male']:
             for appointSession in range(1, 6):
                 Model = TCN_Multi(attentionName=[attentionName for _ in range(headNumber)],
@@ -15,8 +15,8 @@ if __name__ == '__main__':
                                   cudaFlag=cudaFlag)
                 trainDataset, testDataset = Loader_IEMOCAP(appointGender=appointGender, appointSession=appointSession,
                                                            multiFlag=True, batchSize=16, appointShape=500)
-                savePath = 'D:/PythonProjects_Data/IEMOCAP_Result_Test/TCN-Head%02d-500/%s/%s-%d' % (
+                savePath = 'D:/PythonProjects_Data/IEMOCAP_Result_Test/TCN-Head%02d-500-Neo/%s/%s-%d' % (
                     headNumber, attentionName, appointGender, appointSession)
 
                 Template_FluctuateSize(Model=Model, trainDataset=trainDataset, testDataset=testDataset,
-                                       cudaFlag=cudaFlag, savePath=savePath)
+                                       cudaFlag=cudaFlag, savePath=savePath, weightDecay=1E-2)
