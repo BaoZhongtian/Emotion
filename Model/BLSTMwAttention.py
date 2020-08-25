@@ -12,8 +12,14 @@ class BLSTMwAttention(AttentionBase):
 
     def forward(self, inputData, inputSeqLen):
         inputData = inputData.float().squeeze()
+        inputData = inputData.permute([0, 2, 1, 3])
+        inputData = inputData.reshape(
+            [inputData.size()[0], inputData.size()[1], inputData.size()[2] * inputData.size()[3]])
         rnnOutput, _ = self.rnnLayer(input=inputData, hx=None)
         attentionResult, attentionHotMap = self.ApplyAttention(
             dataInput=rnnOutput, attentionName=self.attentionName, inputSeqLen=inputSeqLen, hiddenNoduleNumbers=256)
         predict = self.predict(input=attentionResult)
         return predict, attentionHotMap
+
+    def cudaTreatment(self):
+        pass
